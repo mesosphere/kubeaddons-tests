@@ -1,0 +1,13 @@
+apiVersion: kudo.dev/v1alpha1
+kind: TestSuite
+commands:
+  - command: kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
+testDirs:
+  - ./tests/cassandra/
+  - ./tests/spark/
+  - ./tests/kafka/
+  - ./tests/zookeeper/
+  - ./tests/jenkins/
+startKIND: false
+timeout: 500
+parallel: 2
