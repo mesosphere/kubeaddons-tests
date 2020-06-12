@@ -1,3 +1,5 @@
 kubeconfig
 dist/
 kubeaddons-enterprise/
+.kube/
+bin/

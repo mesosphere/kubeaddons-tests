@@ -1,5 +1,5 @@
 apiVersion: kudo.dev/v1beta1
 kind: TestStep
 commands:
-  - command: kubectl apply -f $KUBEADDONS_ENTERPRISE_PATH/addons/cassandra/0.x/cassandra-2.yaml
+  - command: kubectl apply -f ${KUBEADDONS_ENTERPRISE_ABS_PATH}/addons/cassandra/0.x/cassandra-2.yaml
     namespaced: true
