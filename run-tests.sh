@@ -5,7 +5,11 @@ TESTING_BRANCH=${TESTING_BRANCH:-dev}
 KUBEADDONS_ENTERPRISE_PATH=${KUBEADDONS_ENTERPRISE_PATH:-kubeaddons-enterprise}
 printf "testing kubeaddons-enterprise branch %s\n" "$TESTING_BRANCH"
 
-if [ -d "$KUBEADDONS_ENTERPRISE_PATH" ]
+if [ -d "../addons" ]
+then
+  printf "Running inside the kubeaddons-enterprise repository"
+  KUBEADDONS_ENTERPRISE_PATH="../."
+elif [ -d "$KUBEADDONS_ENTERPRISE_PATH" ]
 then
   pushd $KUBEADDONS_ENTERPRISE_PATH
   git checkout ${TESTING_BRANCH}
