@@ -12,7 +12,7 @@ then
   git checkout ${TESTING_BRANCH}
   popd
 else
-  git clone --depth 1 git@github.com:mesosphere/kubeaddons-enterprise.git --branch ${TESTING_BRANCH} --single-branch
+  git clone --depth 1 https://github.com/mesosphere/kubeaddons-enterprise.git --branch ${TESTING_BRANCH} --single-branch
 fi
 
 for i in $(find "${KUBEADDONS_ENTERPRISE_PATH}"/addons -mindepth 2 -type d)
