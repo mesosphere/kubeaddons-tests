@@ -1,5 +1,5 @@
 kubeconfig
-dist/
-kubeaddons-enterprise/
+/dist
+/kubeaddons-enterprise
 .kube/
-bin/
+/bin
