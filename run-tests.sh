@@ -28,9 +28,9 @@ done
 
 go get github.com/jstemmer/go-junit-report
 mkdir -p dist
-
 printf "Path %s\n" "$KUBEADDONS_ENTERPRISE_ABS_PATH"
+
 for i in $(find "${KUBEADDONS_ENTERPRISE_PATH}"/addons -mindepth 2 -type d)
 do
-    KUBEADDONS_ENTERPRISE_ABS_PATH="$KUBEADDONS_ENTERPRISE_ABS_PATH" kubectl-kuttl test tests/"$i" | tee /dev/fd/2 | go-junit-report -set-exit-code > dist/addons_test_report.xml
+    KUBEADDONS_ENTERPRISE_ABS_PATH="$KUBEADDONS_ENTERPRISE_ABS_PATH" kubectl-kuttl test tests/"$i" | tee /dev/fd/2 | go-junit-report -set-exit-code > dist/${i////_}-addons_test_report.xml
 done
