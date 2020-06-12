@@ -3,6 +3,7 @@ kind: Addon
 metadata:
   name: cassandra
 spec:
+  requires:
   kudoReference:
     parameters: |
       NODE_COUNT: 1
