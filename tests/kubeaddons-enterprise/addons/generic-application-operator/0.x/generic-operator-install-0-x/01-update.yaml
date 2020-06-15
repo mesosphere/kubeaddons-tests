@@ -1,0 +1,12 @@
+apiVersion: kubeaddons.mesosphere.io/v1beta1
+kind: Addon
+metadata:
+  name: generic-application-operator
+spec:
+  kudoReference:
+    parameters: |
+      APPLICATION_NAME: nginx
+      PORT: 80
+      ENV: '{"foo": "bar", "bam": "baz"}'
+      IMAGE: nginx
+      INGRESS_ENABLED: True

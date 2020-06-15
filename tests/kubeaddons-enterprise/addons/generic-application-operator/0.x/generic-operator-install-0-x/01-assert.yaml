@@ -1,0 +1,20 @@
+apiVersion: kudo.dev/v1beta1
+kind: Instance
+metadata:
+  name: generic-application-operator
+status:
+  planStatus:
+    deploy:
+      status: COMPLETE
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: generic-application-operator-nginx
+status:
+  readyReplicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: generic-application-operator-nginx
