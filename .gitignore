@@ -1,0 +1,7 @@
+kubeconfig
+/dist
+/kubeaddons-enterprise
+.kube/
+/bin
+go.mod
+go.sum

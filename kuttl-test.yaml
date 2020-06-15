@@ -1,0 +1,16 @@
+apiVersion: kudo.dev/v1alpha1
+kind: TestSuite
+commands:
+  - command: kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
+testDirs:
+  - ./tests/cassandra/
+  - ./tests/spark/
+  - ./tests/kafka/
+  - ./tests/zookeeper/
+  - ./tests/jenkins/
+timeout: 500
+# current CI agent can only handle max 3 addons in parallel
+# in case of Kafka addon it comes with Zookeeper also
+# which limits the parallel to 2 addons
+# Can be increased in local environments
+parallel: 2
