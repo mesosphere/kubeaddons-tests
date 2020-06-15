@@ -11,11 +11,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: zookeeper-zookeeper
-spec:
-  template:
-    spec:
-      containers:
-        - name: kubernetes-zookeeper
 status:
   readyReplicas: 1
 ---

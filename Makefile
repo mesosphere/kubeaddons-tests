@@ -37,7 +37,7 @@ install-bin: bin/kind bin/kubectl-kuttl
 create-kind-cluster: $(KUBECONFIG)
 
 $(KUBECONFIG): install-bin
-	bin/kind create cluster --wait 10s --config=kind/$(KUBERNETES_VERSION).yaml
+	bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION)
 
 .PHONY: kind-test
 kind-test: create-kind-cluster
