@@ -48,3 +48,8 @@ kind-test: create-kind-cluster
 .PHONY: clean
 clean:
 	bin/kind delete cluster
+	rm -f $(KUBECONFIG)
+	rm -f go.mod
+	rm -f go.sum
+	# delete the checked out repository
+	rm -rf kubeaddons-enterprise

@@ -3,3 +3,5 @@ kubeconfig
 /kubeaddons-enterprise
 .kube/
 /bin
+go.mod
+go.sum

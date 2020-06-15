@@ -32,7 +32,10 @@ do
     fi
 done
 
-go get github.com/jstemmer/go-junit-report
+## go modules let us specify a specific version of go-junit-report
+## the project doesn't use go modules other than this purpose
+go mod init kubeaddons-enterprise-tests
+go get github.com/jstemmer/go-junit-report@v0.9.1
 mkdir -p dist
 printf "Path %s\n" "$KUBEADDONS_ENTERPRISE_ABS_PATH"
 
