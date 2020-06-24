@@ -2,6 +2,7 @@ apiVersion: kudo.dev/v1alpha1
 kind: TestSuite
 commands:
   - command: kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
+  - command: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
 testDirs:
   - ./tests/cassandra/
   - ./tests/spark/
