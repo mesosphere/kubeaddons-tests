@@ -32,14 +32,9 @@ do
     fi
 done
 
-## go modules let us specify a specific version of go-junit-report
-## the project doesn't use go modules other than this purpose
-go mod init kubeaddons-enterprise-tests
-go get github.com/jstemmer/go-junit-report@v0.9.1
-mkdir -p dist
 printf "Path %s\n" "$KUBEADDONS_ENTERPRISE_ABS_PATH"
-
 for i in $(find "${KUBEADDONS_ENTERPRISE_PATH}"/addons -mindepth 2 -maxdepth 2 -type d)
 do
-    KUBEADDONS_ENTERPRISE_ABS_PATH="$KUBEADDONS_ENTERPRISE_ABS_PATH" kubectl-kuttl test --config=${KUTTL_TEST_CONFIGURATION_PATH} ${KUBEADDONS_ENTERPRISE_TESTS_PATH}/$i | tee /dev/fd/2 | go-junit-report -set-exit-code > dist/${i////_}-addons_test_report.xml
+    mkdir -p dist/${i////_}
+    KUBEADDONS_ENTERPRISE_ABS_PATH="$KUBEADDONS_ENTERPRISE_ABS_PATH" kubectl-kuttl test --artifacts-dir=./dist/${i////_} --config=${KUTTL_TEST_CONFIGURATION_PATH} ${KUBEADDONS_ENTERPRISE_TESTS_PATH}/$i --report xml
 done
