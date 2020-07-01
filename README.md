@@ -1,4 +1,4 @@
-# kubeaddons-enterprise-tests
+# kubeaddons-tests
 
 This repository hosts tests for the `github.com/mesosphere/kubeaddons-enterprise` repository. 
 
@@ -9,7 +9,7 @@ This repository hosts tests for the `github.com/mesosphere/kubeaddons-enterprise
 ## Testing from kubeaddons-enterprise
 
 - Clone this repo inside the kubeaddons-enterprise
-- Run kubeaddons-enterprise-tests/run-tests.sh
+- Run kubeaddons-tests/run-tests.sh
 
 
 

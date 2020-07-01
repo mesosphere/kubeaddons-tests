@@ -1,6 +1,6 @@
 # Addon Tests
 
-kubeaddons-enterprise-tests use KUTTL for testing.
+kubeaddons-tests use KUTTL for testing.
 
 ### Tests structure
 

@@ -11,8 +11,8 @@ if [ -d "./addons" ]
 then
   printf "Running inside the kubeaddons-enterprise repository"
   KUBEADDONS_ENTERPRISE_PATH="."
-  KUBEADDONS_ENTERPRISE_TESTS_PATH="kubeaddons-enterprise-tests/tests/kubeaddons-enterprise"
-  KUTTL_TEST_CONFIGURATION_PATH="kubeaddons-enterprise-tests/kuttl-test.yaml"
+  KUBEADDONS_ENTERPRISE_TESTS_PATH="kubeaddons-tests/tests/kubeaddons-enterprise"
+  KUTTL_TEST_CONFIGURATION_PATH="kubeaddons-tests/kuttl-test.yaml"
 elif [ -d "$KUBEADDONS_ENTERPRISE_PATH" ]
 then
   git -C "${KUBEADDONS_ENTERPRISE_PATH}" checkout ${TESTING_BRANCH}
