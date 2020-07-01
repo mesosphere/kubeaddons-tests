@@ -1,4 +1,4 @@
-KUTTL_VERSION=0.4.0
+KUTTL_VERSION=0.5.0
 KIND_VERSION=0.8.1
 KUBERNETES_VERSION ?= 1.17.5
 KUBECONFIG=kubeconfig
@@ -49,7 +49,6 @@ kind-test: create-kind-cluster
 clean:
 	bin/kind delete cluster
 	rm -f $(KUBECONFIG)
-	rm -f go.mod
-	rm -f go.sum
+	rm -rf dist
 	# delete the checked out repository
 	rm -rf kubeaddons-enterprise
