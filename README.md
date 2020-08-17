@@ -1,38 +1,33 @@
 # kubeaddons-tests
 
-This repository hosts tests for the `github.com/mesosphere/kubeaddons-enterprise` repository. 
+This repository hosts tests for kubeaddons repositories.
 
+The intention of this repo is to keep kubeaddons repositories clean of any overhead that might break the catalog integration.
 
-`mesosphere/kubeaddons-enterprise` is hosted as default catalog in many kubernetes clusters. The intention is to keep that repository clean of any overhead that might break the catalog integration.
+## Testing from kubeaddons repositories
 
-
-## Testing from kubeaddons-enterprise
-
-- Clone this repo inside the kubeaddons-enterprise
+- Clone this repo inside the repository
 - Run kubeaddons-tests/run-tests.sh
 
+## Testing a branch from this repository
 
-
-## Testing a branch of kubeaddons-enterprise from this repository
-
-```
-export TESTING_BRANCH=dev
-make kind-test
+```shell
+make kind-test TESTING_BRANCH=dev KUBEADDONS_REPO=kubeaddons-enterprise
 ```
 
-The above command will clone the git branch `TESTING_BRANCH` of `kubeaddons-enterprise` in local path and
-run the tests for all addons using a KIND cluster
-
+The above command will clone the git branch `dev` of `kubeaddons-enterprise` in local path and
+run the tests for all addons using a [kind][kind] cluster.
 
 ## Adding tests
 
-`kubeaddons-enterprise` repository is used as default backend in many 
-Konvoy Clusters. For that reason each addon in the `kubeaddons-enterprise` 
-you need to add a respective test in this repository.
+Add addon tests in the respective kubeaddons-repository directory:
+`kubernetes-base-addons`,
+`kubeaddons-enterprise`,
+etc.
 
-For example to add tests for cassandra `0.x` addon, add the KUTTL based 
-steps with a directory structure like: 
-```
+For example to add tests for cassandra `0.x` addon in the `kubeaddons-enterprise` repo, add the [kuttl][kuttl] based steps with a directory structure like:
+
+```text
 └── tests
     └── kubeaddons-enterprise
         └── addons
@@ -45,3 +40,6 @@ steps with a directory structure like:
                         └── 01-update.yaml
 
 ```
+
+[kind]: https://github.com/kubernetes-sigs/kind
+[kuttl]: https://github.com/kudobuilder/kuttl
