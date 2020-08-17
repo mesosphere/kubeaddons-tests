@@ -2,39 +2,37 @@
 set -euo pipefail
 
 TESTING_BRANCH=${TESTING_BRANCH:-dev}
-KUBEADDONS_ENTERPRISE_PATH=${KUBEADDONS_ENTERPRISE_PATH:-kubeaddons-enterprise}
-KUBEADDONS_ENTERPRISE_TESTS_PATH="./tests"
-KUTTL_TEST_CONFIGURATION_PATH="kuttl-test.yaml"
-printf "testing kubeaddons-enterprise branch %s\n" "$TESTING_BRANCH"
+KUBEADDONS_REPO=${KUBEADDONS_REPO:-kubeaddons-enterprise}
+KUBEADDONS_TESTS_PATH="$(dirname $0)/tests"
+KUTTL_TEST_CONFIGURATION_PATH="${KUBEADDONS_TESTS_PATH}/${KUBEADDONS_REPO}/kuttl-test.yaml"
+printf "testing %s branch %s\n" "${KUBEADDONS_REPO}" "${TESTING_BRANCH}"
 
 if [ -d "./addons" ]
 then
-  printf "Running inside the kubeaddons-enterprise repository"
-  KUBEADDONS_ENTERPRISE_PATH="."
-  KUBEADDONS_ENTERPRISE_TESTS_PATH="kubeaddons-tests/tests/kubeaddons-enterprise"
-  KUTTL_TEST_CONFIGURATION_PATH="kubeaddons-tests/kuttl-test.yaml"
-elif [ -d "$KUBEADDONS_ENTERPRISE_PATH" ]
+  printf "Running inside the ${KUBEADDONS_REPO} repository"
+  KUBEADDONS_REPO="."
+elif [ -d "${KUBEADDONS_REPO}" ]
 then
-  git -C "${KUBEADDONS_ENTERPRISE_PATH}" checkout ${TESTING_BRANCH}
+  git -C "${KUBEADDONS_REPO}" checkout ${TESTING_BRANCH}
 else
-  git clone --depth 1 https://github.com/mesosphere/kubeaddons-enterprise.git --branch ${TESTING_BRANCH} --single-branch
+  git clone --depth 1 https://github.com/mesosphere/${KUBEADDONS_REPO}.git --branch ${TESTING_BRANCH} --single-branch
 fi
 
-KUBEADDONS_ENTERPRISE_ABS_PATH=$(realpath -L "${KUBEADDONS_ENTERPRISE_PATH}")
+KUBEADDONS_ABS_PATH=$(realpath -L "${KUBEADDONS_REPO}")
 
-for i in $(find "${KUBEADDONS_ENTERPRISE_PATH}"/addons -mindepth 2 -maxdepth 2 -type d)
+for i in $(find "${KUBEADDONS_REPO}"/addons -mindepth 2 -maxdepth 2 -type d)
 do
-    printf "addon directory detected: %s\n" "$i"
-    if [ ! -d "${KUBEADDONS_ENTERPRISE_TESTS_PATH}/$i" ]
+    printf "addon directory detected: %s\n" "${i}"
+    if [ ! -d "${KUBEADDONS_TESTS_PATH}/${i}" ]
     then
-      printf "missing tests for addon directory %s\n" "${KUBEADDONS_ENTERPRISE_TESTS_PATH}/$i"
+      printf "missing tests for addon directory %s\n" "${KUBEADDONS_TESTS_PATH}/${i}"
       exit 1
     fi
 done
 
-printf "Path %s\n" "$KUBEADDONS_ENTERPRISE_ABS_PATH"
-for i in $(find "${KUBEADDONS_ENTERPRISE_PATH}"/addons -mindepth 2 -maxdepth 2 -type d)
+printf "Path %s\n" "${KUBEADDONS_ABS_PATH}"
+for i in $(find "${KUBEADDONS_REPO}"/addons -mindepth 2 -maxdepth 2 -type d)
 do
     mkdir -p dist/${i////_}
-    KUBEADDONS_ENTERPRISE_ABS_PATH="$KUBEADDONS_ENTERPRISE_ABS_PATH" kubectl-kuttl test --artifacts-dir=./dist/${i////_} --config=${KUTTL_TEST_CONFIGURATION_PATH} ${KUBEADDONS_ENTERPRISE_TESTS_PATH}/$i --report xml
+    KUBEADDONS_ABS_PATH="${KUBEADDONS_ABS_PATH}" kubectl-kuttl test --artifacts-dir=./dist/${i////_} --config=${KUTTL_TEST_CONFIGURATION_PATH} ${KUBEADDONS_TESTS_PATH}/${i} --report xml
 done

@@ -1,7 +1,10 @@
-KUTTL_VERSION=0.5.0
-KIND_VERSION=0.8.1
+KUBEADDONS_REPO ?= kubeaddons-enterprise
+TESTING_BRANCH ?= dev
+
+KIND_VERSION ?= 0.8.1
+KUBECONFIG ?= kubeconfig
 KUBERNETES_VERSION ?= 1.17.5
-KUBECONFIG=kubeconfig
+KUTTL_VERSION ?= 0.5.0
 
 OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 MACHINE=$(shell uname -m)
@@ -41,7 +44,7 @@ $(KUBECONFIG): install-bin
 
 .PHONY: kind-test
 kind-test: create-kind-cluster
-	./run-tests.sh
+	KUBEADDONS_REPO=$(KUBEADDONS_REPO) TESTING_BRANCH=$(TESTING_BRANCH) ./run-tests.sh
 	bin/kind delete cluster
 	rm $(KUBECONFIG)
 
@@ -49,6 +52,6 @@ kind-test: create-kind-cluster
 clean:
 	bin/kind delete cluster
 	rm -f $(KUBECONFIG)
-	rm -rf dist
+	rm -rf $(ARTIFACTS)
 	# delete the checked out repository
-	rm -rf kubeaddons-enterprise
+	rm -rf $(KUBEADDONS_REPO)
