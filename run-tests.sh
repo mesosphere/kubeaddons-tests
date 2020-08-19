@@ -9,7 +9,7 @@ printf "testing %s branch %s\n" "${KUBEADDONS_REPO}" "${TESTING_BRANCH}"
 
 if [ -d "./addons" ]
 then
-  printf "Running inside the ${KUBEADDONS_REPO} repository"
+  printf "Running inside the %s repository\n" "${KUBEADDONS_REPO}"
   KUBEADDONS_REPO="."
 elif [ -d "${KUBEADDONS_REPO}" ]
 then
@@ -33,6 +33,7 @@ done
 printf "Path %s\n" "${KUBEADDONS_ABS_PATH}"
 for i in $(find "${KUBEADDONS_REPO}"/addons -mindepth 2 -maxdepth 2 -type d)
 do
+    printf "running tests in %s\n" "${KUBEADDONS_TESTS_PATH}/${i}"
     mkdir -p dist/${i////_}
     KUBEADDONS_ABS_PATH="${KUBEADDONS_ABS_PATH}" kubectl-kuttl test --artifacts-dir=./dist/${i////_} --config=${KUTTL_TEST_CONFIGURATION_PATH} ${KUBEADDONS_TESTS_PATH}/${i} --report xml
 done
