@@ -40,17 +40,17 @@ install-bin: bin/kind bin/kubectl-kuttl
 create-kind-cluster: $(KUBEADDONS_TEST_KUBECONFIG)
 
 $(KUBEADDONS_TEST_KUBECONFIG): install-bin
-	bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION)
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION)
 
 .PHONY: kind-test
 kind-test: create-kind-cluster
 	KUBEADDONS_REPO=$(KUBEADDONS_REPO) TESTING_BRANCH=$(TESTING_BRANCH) KUBEADDONS_TEST_KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) ./run-tests.sh
-	bin/kind delete cluster
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind delete cluster
 	rm $(KUBEADDONS_TEST_KUBECONFIG)
 
 .PHONY: clean
 clean:
-	bin/kind delete cluster
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind delete cluster
 	rm -f $(KUBEADDONS_TEST_KUBECONFIG)
 	rm -rf $(ARTIFACTS)
 	# delete the checked out repository
