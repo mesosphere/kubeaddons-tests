@@ -1,7 +1,12 @@
-KUTTL_VERSION=0.5.0
-KIND_VERSION=0.8.1
+ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+
+KUBEADDONS_REPO ?= kubeaddons-enterprise
+TESTING_BRANCH ?= dev
+
+KIND_VERSION ?= 0.8.1
+KUBEADDONS_TEST_KUBECONFIG ?= kubeconfig
 KUBERNETES_VERSION ?= 1.17.5
-KUBECONFIG=kubeconfig
+KUTTL_VERSION ?= 0.5.0
 
 OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 MACHINE=$(shell uname -m)
@@ -34,21 +39,21 @@ bin/kubectl-kuttl: bin/kubectl-kuttl_$(KUTTL_VERSION)
 install-bin: bin/kind bin/kubectl-kuttl
 
 .PHONY: create-kind-cluster
-create-kind-cluster: $(KUBECONFIG)
+create-kind-cluster: $(KUBEADDONS_TEST_KUBECONFIG)
 
-$(KUBECONFIG): install-bin
-	bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION)
+$(KUBEADDONS_TEST_KUBECONFIG): install-bin
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION)
 
 .PHONY: kind-test
 kind-test: create-kind-cluster
-	./run-tests.sh
-	bin/kind delete cluster
-	rm $(KUBECONFIG)
+	KUBEADDONS_REPO=$(KUBEADDONS_REPO) TESTING_BRANCH=$(TESTING_BRANCH) KUBEADDONS_TEST_KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) $(ROOT_DIR)/run-tests.sh
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind delete cluster
+	rm $(KUBEADDONS_TEST_KUBECONFIG)
 
 .PHONY: clean
 clean:
-	bin/kind delete cluster
-	rm -f $(KUBECONFIG)
-	rm -rf dist
+	KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG) bin/kind delete cluster
+	rm -f $(KUBEADDONS_TEST_KUBECONFIG)
+	rm -rf $(ARTIFACTS)
 	# delete the checked out repository
-	rm -rf kubeaddons-enterprise
+	rm -rf $(KUBEADDONS_REPO)
