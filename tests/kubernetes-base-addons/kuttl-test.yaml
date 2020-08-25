@@ -1,12 +1,21 @@
+---
 apiVersion: kudo.dev/v1alpha1
 kind: TestSuite
 commands:
   - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.crt /tmp/ca.crt
   - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.key /tmp/ca.key
-  - command: bash -c "kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -"
-  - command: bash -c "kubectl create secret tls kubernetes-root-ca --namespace cert-manager --cert=/tmp/ca.crt --key=/tmp/ca.key --dry-run=client -o yaml | kubectl apply -f -"
-  - command: kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
+  - command: >
+      bash -c "kubectl create namespace cert-manager --dry-run=client -o yaml |
+      kubectl apply -f -"
+  - command: >
+      bash -c "kubectl create secret tls kubernetes-root-ca
+      --namespace cert-manager --cert=/tmp/ca.crt --key=/tmp/ca.key
+      --dry-run=client -o yaml |
+      kubectl apply -f -"
+  - command: >
+      kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
 testDirs: []
 timeout: 500
-# this is copied from kubeaddons-enterprise and should be reviewed when we have more tests
+# this is copied from kubeaddons-enterprise and should
+# be reviewed when we have more tests
 parallel: 2

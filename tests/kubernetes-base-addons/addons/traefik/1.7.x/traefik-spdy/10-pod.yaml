@@ -5,11 +5,11 @@ metadata:
   name: testpod
 spec:
   containers:
-    - args:
-      - sh
-      - -c
-      - echo SUCCESS; echo FOO; sleep inf
+    - name: testpod
+      args:
+        - sh
+        - -c
+        - echo SUCCESS; echo FOO; sleep inf
       image: busybox
       imagePullPolicy: Always
-      name: testpod
   restartPolicy: Never

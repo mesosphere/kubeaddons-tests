@@ -1,8 +1,11 @@
+---
 apiVersion: kudo.dev/v1beta1
 kind: TestStep
 commands:
   - command: ./metallb-config.sh
-  - command: kubectl create clusterrolebinding --clusterrole=cluster-admin --serviceaccount=${NAMESPACE}:kuttlaccount kuttlcrb
+  - command: >
+      kubectl create clusterrolebinding --clusterrole=cluster-admin
+      --serviceaccount=${NAMESPACE}:kuttlaccount kuttlcrb
 apply:
   - ${KUBEADDONS_ABS_PATH}/addons/konvoyconfig/0.0.x/konvoyconfig-3.yaml
   - ${KUBEADDONS_ABS_PATH}/addons/cert-manager/0.10.x/cert-manager-6.yaml

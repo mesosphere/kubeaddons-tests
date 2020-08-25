@@ -1,3 +1,4 @@
+---
 apiVersion: kubeaddons.mesosphere.io/v1beta1
 kind: ClusterAddon
 metadata:
@@ -13,7 +14,7 @@ metadata:
 spec:
   template:
     spec:
-     containers:
-     - name: traefik-kubeaddons
+      containers:
+        - name: traefik-kubeaddons
 status:
   readyReplicas: 2
