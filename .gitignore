@@ -1,6 +1,9 @@
 kubeconfig
 /dist
 /kubeaddons-enterprise
+/kubeaddons-dispatch
+/kubernetes-base-addons
+/kubeaddons-kommander
 .kube/
 /bin
 go.mod
