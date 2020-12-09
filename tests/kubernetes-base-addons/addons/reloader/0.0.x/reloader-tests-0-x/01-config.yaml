@@ -1,0 +1,162 @@
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html0
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html1
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html2
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html3
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html4
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html5
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html6
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html7
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html8
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html8
+  namespace: kubeaddons
+---
+apiVersion: v1
+data:
+  index.html: original
+kind: ConfigMap
+metadata:
+  name: html9
+  namespace: kubeaddons
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: kubeaddons
+  annotations:
+    "reloader.stakater.com/auto": "true"
+spec:
+  replicas: 50
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+      annotations:
+        "reloader.stakater.com/auto": "true"
+    spec:
+      containers:
+      - name: container
+        image: nginx:1.19.4
+        volumeMounts:
+          - name: html0
+            mountPath: /usr/share/nginx/html
+          - name: html2
+            mountPath: /root/html2
+          - name: html3
+            mountPath: /root/html3
+          - name: html4
+            mountPath: /root/html4
+          - name: html5
+            mountPath: /root/html5
+          - name: html6
+            mountPath: /root/html6
+          - name: html7
+            mountPath: /root/html7
+          - name: html8
+            mountPath: /root/html8
+          - name: html9
+            mountPath: /root/html9
+        ports:
+          - containerPort: 80
+      volumes:
+      - name: html0
+        configMap:
+          name: html0
+      - name: html1
+        configMap:
+          name: html1
+      - name: html2
+        configMap:
+          name: html2
+      - name: html3
+        configMap:
+          name: html3
+      - name: html4
+        configMap:
+          name: html4
+      - name: html5
+        configMap:
+          name: html5
+      - name: html6
+        configMap:
+          name: html6
+      - name: html7
+        configMap:
+          name: html7
+      - name: html8
+        configMap:
+          name: html8
+      - name: html9
+        configMap:
+          name: html9
