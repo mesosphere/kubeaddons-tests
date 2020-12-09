@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: kubeaddons
+  labels:
+    provider: stakater
+    release: reloader-kubeaddons
+status:
+  containerStatuses:
+  - ready: true
+    restartCount: 0

@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reloader-kubeaddons-reloader
+  namespace: kubeaddons
+status:
+  containerStatuses:
+  - ready: false
+    restartCount: 1
