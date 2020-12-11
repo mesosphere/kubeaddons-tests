@@ -48,7 +48,7 @@ fi
 ADDON_LIST=()
 while IFS=  read -r -d $'\0'; do
     ADDON_LIST+=("$REPLY")
-done < <(find "${KUBEADDONS_REPO}/addons" -mindepth 2 -maxdepth 2 -type d -print0)
+done < <(find "${KUBEADDONS_REPO}/addons" -maxdepth 2 -type d -print0)
 
 KUBEADDONS_ABS_PATH=$(realpath -L "${KUBEADDONS_REPO}")
 export KUBEADDONS_ABS_PATH
