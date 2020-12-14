@@ -7,5 +7,6 @@ metadata:
     release: reloader-kubeaddons
 status:
   containerStatuses:
-  - ready: true
+  - name: reloader-kubeaddons-reloader
+    ready: true
     restartCount: 0
