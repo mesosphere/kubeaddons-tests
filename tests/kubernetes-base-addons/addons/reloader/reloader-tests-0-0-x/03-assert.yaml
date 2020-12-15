@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logpod
+  namespace: kubeaddons
+status:
+  phase: Succeeded
