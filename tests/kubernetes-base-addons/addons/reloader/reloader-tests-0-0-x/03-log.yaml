@@ -1,0 +1,47 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: kubeaddons
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: logpod-sa
+  namespace: kubeaddons
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader
+  namespace: kubeaddons
+subjects:
+- kind: ServiceAccount
+  name: logpod-sa
+roleRef:
+  kind: Role
+  name: pod-reader
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logpod
+  namespace: kubeaddons
+spec:
+  containers:
+    - name: log-pod
+      image: mesosphere/kubeaddons-ci:latest
+      imagePullPolicy: IfNotPresent
+      command: ["/bin/bash", "-xc"]
+      securityContext:
+        privileged: true
+      args:
+        - |2-
+          POD=$(kubectl get po -n kubeaddons | grep reloader | awk '{print $1}');
+          kubectl logs -n kubeaddons $POD --tail=1 | python -m json.tool
+  restartPolicy: Never
+  serviceAccount: logpod-sa
