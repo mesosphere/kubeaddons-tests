@@ -1,0 +1,13 @@
+apiVersion: kubeaddons.mesosphere.io/v1beta1
+kind: Addon
+metadata:
+  name: reloader
+  namespace: kubeaddons
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reloader-kubeaddons-reloader
+  namespace: kubeaddons
+status:
+  readyReplicas: 1
