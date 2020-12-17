@@ -1,10 +1,8 @@
 apiVersion: kudo.dev/v1beta1
 kind: TestStep
 commands:
-  # first create namespace 'kubeaddons-enterprise' if it doesn't exist 
+  # first create namespace 'kubeaddons-enterprise' if it doesn't exist
   - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/elasticsearch/1.x/namespace.yaml
     namespaced: false
   - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/elasticsearch/1.x/elasticsearch.yaml
     namespaced: false
-  - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/kibana/3.x/kibana.yaml
-    namespaced: false  

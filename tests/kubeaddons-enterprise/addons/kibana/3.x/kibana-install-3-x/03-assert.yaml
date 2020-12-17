@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana-ext-kubeaddons
+  namespace: kubeaddons-enterprise
+status:
+  readyReplicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-ext-kubeaddons
+  namespace: kubeaddons-enterprise

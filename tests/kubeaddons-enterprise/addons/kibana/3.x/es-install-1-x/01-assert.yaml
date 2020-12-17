@@ -3,9 +3,3 @@ kind: Addon
 metadata:
   name: elasticsearch-ext
   namespace: kubeaddons-enterprise
----
-apiVersion: kubeaddons.mesosphere.io/v1beta1
-kind: Addon
-metadata:
-  name: kibana-ext
-  namespace: kubeaddons-enterprise
