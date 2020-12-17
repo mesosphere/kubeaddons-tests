@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch-ext-kubeaddons-client
+  namespace: kubeaddons-enterprise
+status:
+  readyReplicas: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-ext-kubeaddons-client
+  namespace: kubeaddons-enterprise
