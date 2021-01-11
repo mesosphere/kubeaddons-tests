@@ -41,11 +41,12 @@ create-kind-cluster: $(KUBEADDONS_TEST_KUBECONFIG)
 
 $(KUBEADDONS_TEST_KUBECONFIG): bin/kind bin/kubectl-kuttl
 		@export KIND_TMP=$(shell mktemp -d) && \
-		sed -e s/DOCKER_USERNAME/"$(DOCKERHUB_ROBOT_USERNAME)"/ -e s/DOCKER_PASSWORD/"$(DOCKERHUB_ROBOT_TOKEN)"/ $(ROOT_DIR)/hack/kind-config.yaml > $${KIND_TMP}/kind-config.yaml && \
+		sed -e s/DOCKER_USERNAME/"$(DOCKERHUB_ROBOT_USERNAME)"/ -e s/DOCKER_PASSWORD/"$(DOCKERHUB_ROBOT_TOKEN)"/ $(ROOT_DIR)/hack/kind-config.yaml > $${KIND_TMP}/kind-config.yaml
 		KUBECONFIG=$(KUBEADDONS_TEST_KUBECONFIG)
-		if test ! -f $KUBECONFIG; then
+		if test ! -f $KUBECONFIG 
+		then
 		  bin/kind create cluster --wait 10s --image=kindest/node:v$(KUBERNETES_VERSION) --config $${KIND_TMP}/kind-config.yaml
-		  rm -rf $${KIND_TMP} ;
+		  rm -rf $${KIND_TMP}
 		fi
 
 .PHONY: kind-test
