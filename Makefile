@@ -6,7 +6,7 @@ TESTING_BRANCH ?= dev
 KIND_VERSION ?= 0.8.1
 KUBEADDONS_TEST_KUBECONFIG ?= kubeconfig
 KUBERNETES_VERSION ?= 1.17.5
-KUTTL_VERSION ?= 0.6.1
+KUTTL_VERSION ?= 0.8.0
 
 OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 MACHINE=$(shell uname -m)
