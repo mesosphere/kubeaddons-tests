@@ -1,9 +1,23 @@
+---
 apiVersion: kudo.dev/v1alpha1
 kind: TestSuite
 commands:
-  - command: kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
-  - command: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
-testDirs: []
+  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.crt /tmp/ca.crt
+  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.key /tmp/ca.key
+  - command: >
+      bash -c "kubectl create namespace cert-manager --dry-run=client -o yaml |
+      kubectl apply -f -"
+  - command: >
+      bash -c "kubectl create secret tls kubernetes-root-ca
+      --namespace cert-manager --cert=/tmp/ca.crt --key=/tmp/ca.key
+      --dry-run=client -o yaml |
+      kubectl apply -f -"
+  - command: >
+      kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.0.3/cert-manager.yaml
+  - command: >
+      kubectl wait --for=condition=ready pod -l app=webhook --namespace cert-manager
+  - command: >
+      kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
 timeout: 500
 # current CI agent can only handle max 3 addons in parallel
 # in case of Kafka addon it comes with Zookeeper also
