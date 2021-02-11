@@ -2,9 +2,10 @@
 apiVersion: kudo.dev/v1alpha1
 kind: TestSuite
 commands:
-  - command: sudo usermod -aG docker $USER
-  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.crt /tmp/ca.crt
-  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.key /tmp/ca.key
+  - command: >
+      KIND_POD_NAME=$(kubectl get clusterclaim $CLAIM_NAME | tail +2 | awk '{print $2}')
+      kubectl exec -n dispatch $KIND_POD_NAME -- bash -c "docker ps -aq | xargs -I{} docker exec {} cat /etc/kubernetes/pki/ca.crt"  >> /tmp/ca.crt
+  - command: kubectl exec -n dispatch $KIND_POD_NAME -- bash -c "docker ps -aq | xargs -I{} docker exec {} cat /etc/kubernetes/pki/ca.key"  >> /tmp/ca.key
   - command: >
       bash -c "kubectl create namespace cert-manager --dry-run=client -o yaml |
       kubectl apply -f -"
