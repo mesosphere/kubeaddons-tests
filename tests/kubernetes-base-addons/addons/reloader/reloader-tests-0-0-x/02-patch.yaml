@@ -1,39 +1,39 @@
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html2 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html3 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html4 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html5 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html6 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
       kubectl -n kubeaddons patch configmap/html7 --type merge -p "{\"data\": {\"index.html\": \"change\"}}"
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: |2-
