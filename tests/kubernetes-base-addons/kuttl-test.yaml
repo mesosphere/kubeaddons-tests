@@ -1,5 +1,5 @@
 ---
-apiVersion: kudo.dev/v1alpha1
+apiVersion: kuttl.dev/v1beta1
 kind: TestSuite
 commands:
   - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.crt /tmp/ca.crt
