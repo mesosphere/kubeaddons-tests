@@ -8,3 +8,5 @@ kubeconfig
 /bin
 go.mod
 go.sum
+kubectl-kudo
+kubectl-kudo-self-signed.yaml
