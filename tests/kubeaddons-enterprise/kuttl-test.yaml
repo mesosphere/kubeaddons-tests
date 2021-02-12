@@ -16,7 +16,7 @@ commands:
         fi
         # Avoid recreating kudo CRDs with just the self-signed cert changing.
         if [[ ! -f kubectl-kudo-self-signed.yaml ]]; then
-          ./kubectl-kudo init --dry-run --unsafe-self-signed-webhook-ca --upgrade -o=yaml > kubectl-kudo-self-signed.yaml
+          ./kubectl-kudo init --dry-run --unsafe-self-signed-webhook-ca -o=yaml > kubectl-kudo-self-signed.yaml
         fi
       "
     # Initialize KUDO explicitly without requiring cert-manager
