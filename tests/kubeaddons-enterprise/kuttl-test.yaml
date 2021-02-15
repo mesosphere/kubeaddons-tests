@@ -2,20 +2,26 @@
 apiVersion: kuttl.dev/v1beta1
 kind: TestSuite
 commands:
-  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.crt /tmp/ca.crt
-  - command: docker cp kind-control-plane:/etc/kubernetes/pki/ca.key /tmp/ca.key
+  # Install KUDO out-of-band from Kubeaddons to remove cert-manager dependency.
+  # We're installing kubeaddons version mesosphere/kubeaddons:latest, below. 
+  # Kubeaddons pins the version of KUDO used here: https://github.com/mesosphere/kubeaddons/blob/master/go.mod#L25
+  # KUDO version specified below must be API compatible below.
   - command: >
-      bash -c "kubectl create namespace cert-manager --dry-run=client -o yaml |
-      kubectl apply -f -"
+      bash -c "
+        # Avoid expensive redownload of the KUDO CLI.
+        if [[ ! -x kubectl-kudo ]]; then
+          # Update KUDO version here as needed.
+          wget -O kubectl-kudo http://github.com/kudobuilder/kudo/releases/download/v0.18.0/kubectl-kudo_0.18.0_linux_x86_64
+          chmod +x kubectl-kudo
+        fi
+        # Avoid recreating kudo CRDs with just the self-signed cert changing.
+        if [[ ! -f kubectl-kudo-self-signed.yaml ]]; then
+          ./kubectl-kudo init --dry-run --unsafe-self-signed-webhook-ca -o=yaml > kubectl-kudo-self-signed.yaml
+        fi
+      "
+    # Initialize KUDO explicitly without requiring cert-manager
   - command: >
-      bash -c "kubectl create secret tls kubernetes-root-ca
-      --namespace cert-manager --cert=/tmp/ca.crt --key=/tmp/ca.key
-      --dry-run=client -o yaml |
-      kubectl apply -f -"
-  - command: >
-      kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.0.3/cert-manager.yaml
-  - command: >
-      kubectl wait --for=condition=ready pod -l app=webhook --timeout=5m --namespace cert-manager
+      kubectl apply -f kubectl-kudo-self-signed.yaml
   - command: >
       kubectl apply -f https://mesosphere.github.io/kubeaddons/bundle.yaml
 timeout: 500
