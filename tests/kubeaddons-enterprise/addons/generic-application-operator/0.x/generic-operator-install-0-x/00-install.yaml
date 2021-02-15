@@ -1,4 +1,4 @@
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/generic-application-operator/0.x/generic-application-operator.yaml
