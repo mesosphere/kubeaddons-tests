@@ -1,5 +1,5 @@
 ---
-apiVersion: kudo.dev/v1beta1
+apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
   - command: bash -c "NAMESPACE=$NAMESPACE ./exec-test.sh"
