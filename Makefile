@@ -3,10 +3,10 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 KUBEADDONS_REPO ?= kubeaddons-enterprise
 TESTING_BRANCH ?= dev
 
-KIND_VERSION ?= 0.8.1
+KIND_VERSION ?= 0.10.0
 KUBEADDONS_TEST_KUBECONFIG ?= kubeconfig
-KUBERNETES_VERSION ?= 1.17.5
-KUTTL_VERSION ?= 0.8.0
+KUBERNETES_VERSION ?= 1.19.7
+KUTTL_VERSION ?= 0.9.0
 
 OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 MACHINE=$(shell uname -m)
