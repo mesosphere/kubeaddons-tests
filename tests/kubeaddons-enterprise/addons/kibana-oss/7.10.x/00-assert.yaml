@@ -1,0 +1,4 @@
+apiVersion: kubeaddons.mesosphere.io/v1beta2
+kind: Addon
+metadata:
+  name: kibana-oss
