@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-oss-client
+status:
+  readyReplicas: 1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-oss-master
+status:
+  readyReplicas: 3
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-oss-data
+status:
+  readyReplicas: 3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kibana
+status:
+  readyReplicas: 1

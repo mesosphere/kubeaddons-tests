@@ -1,0 +1,8 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestStep
+commands:
+  - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/elasticsearch-oss/7.10.x/elasticsearch-1.yaml
+    namespaced: true
+  - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/kibana-oss/7.10.x/kibana-1.yaml
+    namespaced: true
+
