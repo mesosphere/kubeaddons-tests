@@ -1,5 +1,5 @@
 apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
-  - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/zookeeper/0.x/zookeeper-3.yaml
+  - command: kubectl apply -f ${KUBEADDONS_ABS_PATH}/addons/zookeeper/0.x/zookeeper-6.yaml
     namespaced: true
